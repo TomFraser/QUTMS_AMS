@@ -1,3 +1,5 @@
+// LICENCSE - THIS CODE IS LICENSED TO CALVIN JOHNSON AS HIS IP AND CEEBS TO WRITE THE REST THX
+
 int RelayControl1 = 2;    // Digital Arduino Pin used to control the motor
 int RelayControl2 = 3;
 int RelayControl3 = 4;
