@@ -24,6 +24,8 @@ int main(void) {
     // Setting AMS pinout
     board_init();
     _delay_ms(100);
+
+    /*Forever loop*/
     while(1) {
         // Perform board routine check
         board_routine();

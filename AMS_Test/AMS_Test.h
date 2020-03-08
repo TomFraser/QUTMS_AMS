@@ -2,6 +2,7 @@
 #define	_AMS_TEST_H
 #include <avr/io.h>
 #include <util/delay.h>
+#include <stdio.h>
 
 #include "macros.h"
 #include "usb_transmit.h"

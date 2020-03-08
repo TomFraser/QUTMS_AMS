@@ -10,10 +10,10 @@ char buf[48];
 
 void board_init(void) {
     // Set Relay control pins as outputs to control triggers
-    SET_OUTPUT(RELAY_PORT, RELAY_CONTROL_1);
-    SET_OUTPUT(RELAY_PORT, RELAY_CONTROL_2);
-    SET_OUTPUT(RELAY_PORT, RELAY_CONTROL_3);
-    SET_OUTPUT(RELAY_PORT, RELAY_CONTROL_4);
+    SET_OUTPUT(DDR_RELAY, RELAY_CONTROL_1);
+    SET_OUTPUT(DDR_RELAY, RELAY_CONTROL_2);
+    SET_OUTPUT(DDR_RELAY, RELAY_CONTROL_3);
+    SET_OUTPUT(DDR_RELAY, RELAY_CONTROL_4);
 
     // DDR_RELAY = (1<<RELAY_CONTROL_1)|(1<<RELAY_CONTROL_1)|
     //             (1<<RELAY_CONTROL_1)|(1<<RELAY_CONTROL_1);
@@ -27,13 +27,16 @@ void board_init(void) {
     WRITE_BIT(RELAY_PORT, RELAY_CONTROL_2, HIGH);
     WRITE_BIT(RELAY_PORT, RELAY_CONTROL_3, HIGH);
     WRITE_BIT(RELAY_PORT, RELAY_CONTROL_4, HIGH);
+
+    //TODO: Copy a code from AMS_V3 to trigger Relays at particular order initially.
 }
 
 void board_routine(void) {
 
     // TODO: Debouncing may not be necessary in this setup
 
-    snprintf(buf, sizeof(buf), "ShutDown: ( %d ) ||| BMSFault: ( %d )\r\n", sdFault, bmsFault);
+    snprintf(buf, sizeof(buf), 
+        "ShutDown: ( %d ) ||| BMSFault: ( %d )\r\n", sdFault, bmsFault);
     send_buffer( buf );
 
     // if we're not getting anything from the shutdown line turn everything off
