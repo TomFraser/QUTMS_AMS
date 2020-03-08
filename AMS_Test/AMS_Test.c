@@ -8,6 +8,7 @@ uint8_t readCounter = 0;
 
 char buf[48];
 
+
 void board_init(void) {
     // Set Relay control pins as outputs to control triggers
     SET_OUTPUT(DDR_RELAY, RELAY_CONTROL_1);
@@ -72,5 +73,41 @@ void board_routine(void) {
         WRITE_BIT(RELAY_PORT, RELAY_CONTROL_2, HIGH);
         WRITE_BIT(RELAY_PORT, RELAY_CONTROL_3, HIGH);
         WRITE_BIT(RELAY_PORT, RELAY_CONTROL_4, HIGH);
+    }
+}
+
+/* Contactors and Precharge */
+#define SHDN_NEG_ON		WRITE_BIT(RELAY_PORT, RELAY_CONTROL_4, LOW)
+#define SHDN_NEG_OFF	WRITE_BIT(RELAY_PORT, RELAY_CONTROL_4, HIGH)
+#define PRE_CHARGE_ON	WRITE_BIT(RELAY_PORT, RELAY_CONTROL_3, LOW)
+#define PRE_CHARGE_OFF	WRITE_BIT(RELAY_PORT, RELAY_CONTROL_3, HIGH)
+#define SHDN_POS_ON		WRITE_BIT(RELAY_PORT, RELAY_CONTROL_2, LOW)
+#define SHDN_POS_OFF	WRITE_BIT(RELAY_PORT, RELAY_CONTROL_4, HIGH)
+
+uint8_t precharge = 1;
+uint8_t positive_on = 0;
+
+void old_AMS_board(void) {
+    if(bmsFault == 0 && sdFault == 0) { // Use PDM CAN packet
+        if(precharge) { // Shutdown -        
+            PRE_CHARGE_ON;
+            SHDN_NEG_ON;
+            positive_on = 1;
+            precharge = 0;
+            _delay_ms(100);
+        } else {
+            PRE_CHARGE_OFF;        
+        }
+
+        if(positive_on) { // Shutdown +
+            SHDN_POS_ON;
+        } else {
+            SHDN_POS_OFF;            
+        }
+    } else {
+        positive_on = 0;
+        precharge = 0;
+        PRE_CHARGE_OFF;
+        SHDN_POS_OFF;        
     }
 }

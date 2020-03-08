@@ -32,4 +32,9 @@ void board_init(void);
 */
 void board_routine(void);
 
+/**
+ * Old way of triggering relays designed by Alistair.
+*/
+void old_AMS_board(void);
+
 #endif
