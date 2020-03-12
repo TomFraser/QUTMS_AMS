@@ -22,39 +22,16 @@ int main(void) {
     set_clock_speed(CPU_8MHz);
 
     // Setting Debugging USB serial
-    control_usb_init();
-    send_str(PSTR(
-                 "\r\nAMS-teensy: USB has been initialised.\r\n"
-             ));
+    // control_usb_init();
 
     // Setting AMS pinout
     board_init();
 
-    SET_INPUT(INPUT1_REG, INPUT_1);
-    SET_INPUT(INPUT2_REG, INPUT_2);
-
     _delay_ms(100);
-
-    set_relay1(LOW);
-    set_relay2(LOW);
-    set_relay3(LOW);
-    set_relay4(LOW);
 
     /*Forever loop*/
     while(1) {
-        // if we're reading something on this input turn the relay on
-        if (BIT_VALUE(PINF, INPUT_1)) {
-            set_relay1(HIGH);
-        } else { // turn it off
-            set_relay1(LOW);
-        }
-
-        // if we're reading something on this input turn the relay on
-        if (BIT_VALUE(PINB, INPUT_2)) {
-            set_relay2(HIGH);
-        } else { // turn it off
-            set_relay2(LOW);
-        }
+        board_routine();
 
         _delay_ms(100);
     }
