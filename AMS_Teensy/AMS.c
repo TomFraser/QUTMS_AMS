@@ -33,22 +33,30 @@ void board_init(void) {
 void board_routine(void) {
     // if we're not ready to drive yet check if we are else do nothing
     if (!rtd) {
-        if (BIT_IS_SET(RTD_REG, RTD_PIN)) {
-            rtd = 1;
+        //if (BIT_IS_SET(RTD_REG, RTD_PIN)) {
+        rtd = 1;
 
-            // turn on precharge and negative contactor
-            WRITE_BIT(RELAY_PORT, RELAY_CONTROL_PRECHARGE, HIGH);
-            WRITE_BIT(RELAY_PORT, RELAY_CONTROL_NEGATIVE, HIGH);
-            WRITE_BIT(RELAY_PORT, RELAY_CONTROL_POSITIVE, LOW);
+        // turn on precharge and negative contactor
+        WRITE_BIT(RELAY_PORT, RELAY_CONTROL_PRECHARGE, HIGH);
+        WRITE_BIT(RELAY_PORT, RELAY_CONTROL_NEGATIVE, HIGH);
+        WRITE_BIT(RELAY_PORT, RELAY_CONTROL_POSITIVE, LOW);
 
-            // wait 0.5 seconds
-            _delay_ms(500);
-            // turn off precharge and turn on positive contactor
-            WRITE_BIT(RELAY_PORT, RELAY_CONTROL_PRECHARGE, LOW);
-            WRITE_BIT(RELAY_PORT, RELAY_CONTROL_NEGATIVE, HIGH);
-            WRITE_BIT(RELAY_PORT, RELAY_CONTROL_POSITIVE, HIGH);
-        }
+        // wait 0.5 seconds
+        _delay_ms(1500);
+
+        // turn on positive contactor
+        WRITE_BIT(RELAY_PORT, RELAY_CONTROL_POSITIVE, HIGH);
+
+        _delay_ms(500);
+
+        // turn off precharge
+        WRITE_BIT(RELAY_PORT, RELAY_CONTROL_PRECHARGE, LOW);
+
+
+        // }
     }
+
+    /*
 
     // checking for faults
     if (!sdFault && !bmsFault) {
@@ -75,6 +83,8 @@ void board_routine(void) {
     } else {
         // we've encountered a fault so stop stop stop stop
     }
+
+    */
 }
 
 

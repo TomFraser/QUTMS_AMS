@@ -8,11 +8,11 @@
 #include "libs/usb_transmit.h"
 
 /// Relay contol pins
-#define DDR_RELAY					DDRD
-#define RELAY_PORT					PORTD
-#define RELAY_CONTROL_PRECHARGE		PORTD0
-#define RELAY_CONTROL_NEGATIVE		PORTD1
-#define RELAY_CONTROL_POSITIVE		PORTD2
+#define DDR_RELAY					DDRF
+#define RELAY_PORT					PORTF
+#define RELAY_CONTROL_PRECHARGE		PORTF7
+#define RELAY_CONTROL_NEGATIVE		PORTF6
+#define RELAY_CONTROL_POSITIVE		PORTF5
 
 /// Fault pins
 #define DDR_FAULT           DDRB
