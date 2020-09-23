@@ -1,21 +1,22 @@
 /* USER CODE BEGIN Header */
 /**
-  ******************************************************************************
-  * @file           : main.c
-  * @brief          : Main program body
-  ******************************************************************************
-  * @attention
-  *
-  * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
-  * All rights reserved.</center></h2>
-  *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
-  *
-  ******************************************************************************
-  */
+ ******************************************************************************
+ * @file           : main.c
+ * @brief          : Main program body
+ ******************************************************************************
+ * @attention
+ *
+ * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
+ * All rights reserved.</center></h2>
+ *
+ *
+ * This software component is licensed by ST under BSD 3-Clause license,
+ * the "License"; You may not use this file except in compliance with the
+ * License. You may obtain a copy of the License at:
+ *                        opensource.org/licenses/BSD-3-Clause
+ *
+ ******************************************************************************
+ */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
@@ -25,7 +26,8 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include <stdio.h>
+#include <string.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -56,6 +58,11 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+char msg[80];
+CAN_TxHeaderTypeDef TxHeader1;
+CAN_TxHeaderTypeDef TxHeader2;
+uint8_t TxData[8];
+uint32_t TxMailbox;
 
 /* USER CODE END 0 */
 
@@ -66,6 +73,18 @@ void SystemClock_Config(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
+	TxHeader1.ExtId = 0x01;
+	TxHeader1.IDE = CAN_ID_EXT;
+	TxHeader1.RTR = CAN_RTR_DATA;
+	TxHeader1.DLC = 2;
+	TxHeader1.TransmitGlobalTime = DISABLE;
+
+	TxHeader2.ExtId = 0x02;
+	TxHeader2.IDE = CAN_ID_EXT;
+	TxHeader2.RTR = CAN_RTR_DATA;
+	TxHeader2.DLC = 2;
+	TxHeader2.TransmitGlobalTime = DISABLE;
+
 
   /* USER CODE END 1 */
 
@@ -92,16 +111,57 @@ int main(void)
   MX_USART3_UART_Init();
   /* USER CODE BEGIN 2 */
 
+	if (HAL_CAN_Start(&hcan1) != HAL_OK)
+	{
+		Error_Handler();
+	}
+
+	if (HAL_CAN_Start(&hcan2) != HAL_OK)
+	{
+		Error_Handler();
+	}
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  while (1)
-  {
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_8, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_9, GPIO_PIN_SET);
+
+	sprintf(msg, "start\r\n");
+	HAL_UART_Transmit(&huart3, (uint8_t*) msg, strlen((char*) msg),
+			HAL_MAX_DELAY);
+
+	while (1)
+	{
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-  }
+		TxData[0] = 0;//vol_low;
+		TxData[1] = 1;//vol_high;
+
+		sprintf(msg, "test\r\n");
+		HAL_UART_Transmit(&huart3, (uint8_t*) msg, strlen((char*) msg),
+				HAL_MAX_DELAY);
+
+
+		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_9, GPIO_PIN_RESET);
+		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_8, GPIO_PIN_RESET);
+		HAL_Delay(500);
+		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_9, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_8, GPIO_PIN_SET);
+		HAL_Delay(500);
+
+		if (HAL_CAN_AddTxMessage(&hcan1, &TxHeader1, TxData, &TxMailbox)
+				!= HAL_OK) {
+			Error_Handler();
+		}
+		if (HAL_CAN_AddTxMessage(&hcan2, &TxHeader2, TxData, &TxMailbox)
+				!= HAL_OK) {
+			Error_Handler();
+		}
+
+	}
   /* USER CODE END 3 */
 }
 
@@ -155,7 +215,12 @@ void SystemClock_Config(void)
 void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
-  /* User can add his own implementation to report the HAL error return state */
+	/* User can add his own implementation to report the HAL error return state */
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_8, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_9, GPIO_PIN_SET);
+	while(1) {
+
+	}
 
   /* USER CODE END Error_Handler_Debug */
 }
@@ -171,7 +236,7 @@ void Error_Handler(void)
 void assert_failed(uint8_t *file, uint32_t line)
 {
   /* USER CODE BEGIN 6 */
-  /* User can add his own implementation to report the file name and line number,
+	/* User can add his own implementation to report the file name and line number,
      tex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
   /* USER CODE END 6 */
 }
