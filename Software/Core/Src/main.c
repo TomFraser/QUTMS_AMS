@@ -137,29 +137,35 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+
+
 		TxData[0] = 0;//vol_low;
 		TxData[1] = 1;//vol_high;
 
-		sprintf(msg, "test\r\n");
-		HAL_UART_Transmit(&huart3, (uint8_t*) msg, strlen((char*) msg),
-				HAL_MAX_DELAY);
+//		sprintf(msg, "test\r\n");
+//		HAL_UART_Transmit(&huart3, (uint8_t*) msg, strlen((char*) msg),
+//				HAL_MAX_DELAY);
 
 
 		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_9, GPIO_PIN_RESET);
 		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_8, GPIO_PIN_RESET);
-		HAL_Delay(500);
+		HAL_GPIO_WritePin(BUZZER_GPIO_Port, BUZZER_Pin, GPIO_PIN_SET);
+		HAL_Delay(0.5);
 		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_9, GPIO_PIN_SET);
 		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_8, GPIO_PIN_SET);
-		HAL_Delay(500);
+		HAL_GPIO_WritePin(BUZZER_GPIO_Port, BUZZER_Pin, GPIO_PIN_RESET);
+		HAL_Delay(0.5);
+//
+//		if (HAL_CAN_AddTxMessage(&hcan1, &TxHeader1, TxData, &TxMailbox)
+//				!= HAL_OK) {
+//			Error_Handler();
+//		}
+//		if (HAL_CAN_AddTxMessage(&hcan2, &TxHeader2, TxData, &TxMailbox)
+//				!= HAL_OK) {
+//			Error_Handler();
+//		}
 
-		if (HAL_CAN_AddTxMessage(&hcan1, &TxHeader1, TxData, &TxMailbox)
-				!= HAL_OK) {
-			Error_Handler();
-		}
-		if (HAL_CAN_AddTxMessage(&hcan2, &TxHeader2, TxData, &TxMailbox)
-				!= HAL_OK) {
-			Error_Handler();
-		}
+
 
 	}
   /* USER CODE END 3 */
