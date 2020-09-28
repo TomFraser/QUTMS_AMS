@@ -58,6 +58,18 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define HVA_P_Pin GPIO_PIN_0
+#define HVA_P_GPIO_Port GPIOB
+#define HVB_P_Pin GPIO_PIN_1
+#define HVB_P_GPIO_Port GPIOB
+#define HVA_N_Pin GPIO_PIN_2
+#define HVA_N_GPIO_Port GPIOB
+#define HVB_N_Pin GPIO_PIN_3
+#define HVB_N_GPIO_Port GPIOB
+#define PRECHG_Pin GPIO_PIN_4
+#define PRECHG_GPIO_Port GPIOB
+#define FAN_Pin GPIO_PIN_5
+#define FAN_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
