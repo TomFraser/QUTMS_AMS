@@ -44,6 +44,28 @@ void AMS_Parse_CellTemperatureShutdown(AMS_CellTemperatureShutdown_t packet, uin
 	*temperature = (uint8_t)(packet.data[1] & 0xFF);
 }
 
+AMS_MissingBMS_t AMS_Compose_MissingBMS(uint8_t data[12])
+{
+	//TODO
+	AMS_MissingBMS_t p;
+	p.extID = MISSING_BMS_ID;
+
+	return p;
+}
+
+void AMS_Parse_MissingBMS(uint8_t* data[12])
+{
+	//TODO
+}
+
+AMS_HeartbeatRequest_t AMS_Compose_HeartbeatRequest()
+{
+	AMS_HeartbeatRequest_t p;
+	p.extID = HEARTBEAT_REQUEST_ID;
+
+	return p;
+}
+
 /* Heartbeat Response */
 AMS_HeartbeatResponse_t AMS_Compose_HeartbeatResponse(bool HVAn, bool HVBn, bool precharge, bool HVAp, bool HVBp, uint8_t averageVoltage, uint16_t runtime)
 {

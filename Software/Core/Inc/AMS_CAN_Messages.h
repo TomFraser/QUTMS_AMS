@@ -24,6 +24,7 @@
 #define READY_ID 0x1040C000
 #define BMS_TRANSMIT_DEVICE_ID_ID 0x1048C000
 #define HEARTBEAT_REQUEST_ID 0x00 // TODO FIX
+#define MISSING_BMS_ID 0x00 //TODO FIX
 
 typedef struct
 {
@@ -50,26 +51,14 @@ typedef struct
 	uint32_t extID;
 	uint8_t data[2];
 } AMS_MissingBMS_t;
-AMS_MissingBMS_t AMS_Compose_MissingBMS(uint8_t data[12])
-{
-	//TODO
-}
-void AMS_Parse_MissingBMS(uint8_t* data[12])
-{
-	//TODO
-}
+AMS_MissingBMS_t AMS_Compose_MissingBMS(uint8_t data[12]);
+void AMS_Parse_MissingBMS(uint8_t* data[12]);
 
 typedef struct
 {
 	uint32_t extID;
 } AMS_HeartbeatRequest_t;
-AMS_HeartbeatRequest_t AMS_Compose_HeartbeatRequest()
-{
-	AMS_HeartbeatRequest_t p;
-	p.extID = HEARTBEAT_REQUEST_ID;
-
-	return p;
-}
+AMS_HeartbeatRequest_t AMS_Compose_HeartbeatRequest();
 
 typedef struct
 {
