@@ -58,18 +58,30 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define HVA_P_Pin GPIO_PIN_0
-#define HVA_P_GPIO_Port GPIOB
 #define HVB_P_Pin GPIO_PIN_1
-#define HVB_P_GPIO_Port GPIOB
-#define HVA_N_Pin GPIO_PIN_2
-#define HVA_N_GPIO_Port GPIOB
-#define HVB_N_Pin GPIO_PIN_3
-#define HVB_N_GPIO_Port GPIOB
-#define PRECHG_Pin GPIO_PIN_4
+#define HVB_P_GPIO_Port GPIOC
+#define HVA_P_Pin GPIO_PIN_1
+#define HVA_P_GPIO_Port GPIOA
+#define HVB_N_Pin GPIO_PIN_2
+#define HVB_N_GPIO_Port GPIOA
+#define HVA_N_Pin GPIO_PIN_6
+#define HVA_N_GPIO_Port GPIOA
+#define FAN_Pin GPIO_PIN_7
+#define FAN_GPIO_Port GPIOA
+#define PRECHG_Pin GPIO_PIN_1
 #define PRECHG_GPIO_Port GPIOB
-#define FAN_Pin GPIO_PIN_5
-#define FAN_GPIO_Port GPIOB
+#define ALM_CTRL_Pin GPIO_PIN_2
+#define ALM_CTRL_GPIO_Port GPIOB
+#define IDC_ALARM_Pin GPIO_PIN_5
+#define IDC_ALARM_GPIO_Port GPIOB
+#define BMS_CTRL_Pin GPIO_PIN_6
+#define BMS_CTRL_GPIO_Port GPIOB
+#define BUZZER_Pin GPIO_PIN_7
+#define BUZZER_GPIO_Port GPIOB
+#define LED0_Pin GPIO_PIN_8
+#define LED0_GPIO_Port GPIOB
+#define LED1_Pin GPIO_PIN_9
+#define LED1_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
