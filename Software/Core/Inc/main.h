@@ -54,7 +54,7 @@ extern "C" {
 void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
-
+void BMS_ALARM_ISR(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/

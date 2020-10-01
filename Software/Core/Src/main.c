@@ -28,6 +28,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "AMS_CAN_Messages.h"
+#include "BMS_CAN_Messages.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -140,13 +141,24 @@ int main(void)
 //		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_9, GPIO_PIN_SET);
 //		HAL_GPIO_WritePin(BUZZER_GPIO_Port, BUZZER_Pin, GPIO_PIN_RESET);
 
-		// Make A Dummy CellVoltageShutdown_t packet with cellNum 0, BMSID 0, 2 Volts reading.
+
+		// AMS Packet Example
 		AMS_CellVoltageShutdown_t x = AMS_Compose_CellVoltageShutdown(0, 0, 2);
 
 		TxHeader1.ExtId = x.extID;
 		TxHeader1.DLC = sizeof(x.data);
 
 		if(HAL_CAN_AddTxMessage(&hcan1, &TxHeader1, x.data, &TxMailbox) != HAL_OK)
+		{
+			Error_Handler();
+		}
+
+		// BMS Packet Example
+		BMS_BadCellVoltage_t pack = Compose_BMS_BadCellVoltage(0, 0, 2);
+		TxHeader1.ExtId = pack.id;
+		TxHeader1.DLC = sizeof(pack.data);
+
+		if(HAL_CAN_AddTxMessage(&hcan1, &TxHeader1, pack.data, &TxMailbox) != HAL_OK)
 		{
 			Error_Handler();
 		}
@@ -194,7 +206,10 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
-
+void BMS_ALARM_ISR(void)
+{
+	return;
+}
 /* USER CODE END 4 */
 
 /**

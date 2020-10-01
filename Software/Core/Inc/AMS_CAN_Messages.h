@@ -11,6 +11,7 @@
 #include "stdbool.h"
 #include "main.h"
 
+// TODO These should be calculated as BMS_ID can affect the CAN packet ID.
 #define HEARTBEAT_RESPONSE_ID 0x8404001
 #define CELL_VOLTAGE_SHUTDOWN_ID 0x400000
 #define CELL_TEMPERATURE_SHUTDOWN_ID 0x400001
@@ -51,8 +52,8 @@ typedef struct
 	uint32_t extID;
 	uint8_t data[2];
 } AMS_MissingBMS_t;
-AMS_MissingBMS_t AMS_Compose_MissingBMS(uint8_t data[12]);
-void AMS_Parse_MissingBMS(uint8_t* data[12]);
+AMS_MissingBMS_t AMS_Compose_MissingBMS(bool data[12]);
+void AMS_Parse_MissingBMS(AMS_MissingBMS_t packet, bool* data[12]);
 
 typedef struct
 {
