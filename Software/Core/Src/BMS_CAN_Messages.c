@@ -7,18 +7,6 @@
 
 #include "BMS_CAN_Messages.h"
 
-/* CANId */
-uint32_t Compose_CANId(uint8_t priority, uint16_t sourceId, uint8_t autonomous, uint8_t type, uint16_t extra, uint8_t BMSId)
-{
-	//TODO aLgOrItHm
-	return (uint32_t)0;
-}
-void Parse_CANId(uint32_t CANId, uint8_t* priority, uint16_t* sourceId, uint8_t* autonomous, uint8_t* type, uint16_t* extra, uint8_t* BMSId)
-{
-	//TODO rEvErSe
-	return;
-}
-
 /* Bad Cell Voltage */
 BMS_BadCellVoltage_t Compose_BMS_BadCellVoltage(uint8_t BMSId, uint8_t cellNumber, uint8_t voltage)
 {

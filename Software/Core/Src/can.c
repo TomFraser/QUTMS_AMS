@@ -22,6 +22,18 @@
 
 /* USER CODE BEGIN 0 */
 
+/* CANId */
+uint32_t Compose_CANId(uint8_t priority, uint16_t sourceId, uint8_t autonomous, uint8_t type, uint16_t extra, uint8_t BMSId)
+{
+	//TODO aLgOrItHm
+	return (uint32_t)0;
+}
+void Parse_CANId(uint32_t CANId, uint8_t* priority, uint16_t* sourceId, uint8_t* autonomous, uint8_t* type, uint16_t* extra, uint8_t* BMSId)
+{
+	//TODO rEvErSe
+	return;
+}
+
 /* USER CODE END 0 */
 
 CAN_HandleTypeDef hcan1;

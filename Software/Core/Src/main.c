@@ -145,7 +145,7 @@ int main(void)
 		// AMS Packet Example
 		AMS_CellVoltageShutdown_t x = AMS_Compose_CellVoltageShutdown(0, 0, 2);
 
-		TxHeader1.ExtId = x.extID;
+		TxHeader1.ExtId = x.id;
 		TxHeader1.DLC = sizeof(x.data);
 
 		if(HAL_CAN_AddTxMessage(&hcan1, &TxHeader1, x.data, &TxMailbox) != HAL_OK)

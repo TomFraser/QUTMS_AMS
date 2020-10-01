@@ -12,7 +12,7 @@
 AMS_CellVoltageShutdown_t AMS_Compose_CellVoltageShutdown(uint8_t cellNum, uint8_t bmsID, uint8_t voltage)
 {
 	AMS_CellVoltageShutdown_t p;
-	p.extID = CELL_VOLTAGE_SHUTDOWN_ID;
+	p.id = Compose_CANId(0x0, 0x10, 0x0, 0x0, 0x0, 0x0);
 	p.data[0] = (cellNum & 0xF) << 4 | (bmsID & 0xF);
 	p.data[1] = (voltage & 0xFF);
 
@@ -30,7 +30,7 @@ void AMS_Parse_CellVoltageShutdown(AMS_CellVoltageShutdown_t packet, uint8_t* ce
 AMS_CellTemperatureShutdown_t AMS_Compose_CellTemperatureShutdown(uint8_t cellNum, uint8_t bmsID, uint8_t temperature)
 {
 	AMS_CellTemperatureShutdown_t p;
-	p.extID = CELL_TEMPERATURE_SHUTDOWN_ID;
+	p.id = Compose_CANId(0x0, 0x10, 0x0, 0x0, 0x1, 0x0);
 	p.data[0] = (cellNum & 0xF) << 4 | (bmsID & 0xF);
 	p.data[1] = (temperature & 0xFF);
 
@@ -48,7 +48,7 @@ AMS_MissingBMS_t AMS_Compose_MissingBMS(bool data[12])
 {
 	//TODO Check
 	AMS_MissingBMS_t p;
-	p.extID = MISSING_BMS_ID;
+	p.id = Compose_CANId(0x0, 0x10, 0x0, 0x0, 0x2, 0x0);
 	p.data[0] = 0 | (data[0] | (data[1] << 1) | (data[2] << 2) | (data[3] << 3) | (data[4] << 4) | (data[5] << 5) | (data[6] << 6) | (data[7] << 7));
 	p.data[1] = 0 | (data[8] | (data[9] << 1) | (data[10] << 2) | (data[11] << 3) | data[12] << 4);
 
@@ -63,7 +63,7 @@ void AMS_Parse_MissingBMS(AMS_MissingBMS_t packet, bool* data[12])
 AMS_HeartbeatRequest_t AMS_Compose_HeartbeatRequest()
 {
 	AMS_HeartbeatRequest_t p;
-	p.extID = HEARTBEAT_REQUEST_ID;
+	p.id = Compose_CANId(0x0, 0x10, 0x0, 0x1, 0x0, 0x0);
 
 	return p;
 }
@@ -72,7 +72,7 @@ AMS_HeartbeatRequest_t AMS_Compose_HeartbeatRequest()
 AMS_HeartbeatResponse_t AMS_Compose_HeartbeatResponse(bool HVAn, bool HVBn, bool precharge, bool HVAp, bool HVBp, uint8_t averageVoltage, uint16_t runtime)
 {
 	AMS_HeartbeatResponse_t p;
-	p.extID = HEARTBEAT_RESPONSE_ID;
+	p.id = Compose_CANId(0x0, 0x10, 0x0, 0x1, 0x1, 0x0);
 
 	p.data[0] = HVAn | (HVBn << 1) | (precharge << 2) | (HVAp << 4) | (HVBp << 5);
 	p.data[1] = averageVoltage;
@@ -99,7 +99,7 @@ void AMS_Parse_HeartbeatResponse(AMS_HeartbeatResponse_t packet, bool* HVAn, boo
 AMS_StartUp_t AMS_Compose_StartUp()
 {
 	AMS_StartUp_t p;
-	p.extID = START_UP_ID;
+	p.id = Compose_CANId(0x0, 0x10, 0x0, 0x2, 0x0, 0x0);
 
 	return p;
 }
@@ -108,7 +108,7 @@ AMS_StartUp_t AMS_Compose_StartUp()
 AMS_ResetTractive_t AMS_Compose_ResetTractive()
 {
 	AMS_ResetTractive_t p;
-	p.extID = RESET_TRACTIVE_ID;
+	p.id = Compose_CANId(0x0, 0x10, 0x0, 0x2, 0x1, 0x0);
 
 	return p;
 }
@@ -117,7 +117,7 @@ AMS_ResetTractive_t AMS_Compose_ResetTractive()
 AMS_Shutdown_t AMS_Compose_Shutdown()
 {
 	AMS_Shutdown_t p;
-	p.extID = SHUTDOWN_ID;
+	p.id = Compose_CANId(0x0, 0x10, 0x0, 0x2, 0x2, 0x0);
 
 	return p;
 }
@@ -126,7 +126,7 @@ AMS_Shutdown_t AMS_Compose_Shutdown()
 AMS_RequestTemperature_t AMS_Compose_RequestTemperature()
 {
 	AMS_RequestTemperature_t p;
-	p.extID = REQUEST_TEMPERATURE_ID;
+	p.id = Compose_CANId(0x0, 0x10, 0x0, 0x2, 0x3, 0x0);
 
 	return p;
 }
@@ -135,7 +135,7 @@ AMS_RequestTemperature_t AMS_Compose_RequestTemperature()
 AMS_TransmitTemperature_t AMS_Compose_TransmitTemperature(uint8_t temperature)
 {
 	AMS_TransmitTemperature_t p;
-	p.extID = TRANSMIT_TEMPERATURE_ID;
+	p.id = Compose_CANId(0x0, 0x10, 0x0, 0x3, 0x3, 0x0);
 	p.data[0] = temperature;
 
 	return p;
@@ -150,7 +150,7 @@ void AMS_Parse_TransmitTemperature(AMS_TransmitTemperature_t packet, uint8_t* te
 AMS_RequestChargeState_t AMS_Compose_RequestChargeState()
 {
 	AMS_RequestChargeState_t p;
-	p.extID = REQUEST_CHARGE_STATE_ID;
+	p.id = Compose_CANId(0x0, 0x10, 0x0, 0x2, 0x4, 0x0);
 
 	return p;
 }
@@ -159,7 +159,7 @@ AMS_RequestChargeState_t AMS_Compose_RequestChargeState()
 AMS_TransmitChargeState_t AMS_Compose_TransmitChargeState(uint16_t chargeState)
 {
 	AMS_TransmitChargeState_t p;
-	p.extID = TRANSMIT_CHARGE_STATE_ID;
+	p.id = Compose_CANId(0x0, 0x10, 0x0, 0x3, 0x4, 0x0);
 	p.data[0] = chargeState >> 8;
 	p.data[1] = (chargeState & 0xFF);
 
@@ -175,25 +175,7 @@ void AMS_Parse_TransmitChargeState(AMS_TransmitChargeState_t packet, uint16_t* c
 AMS_Ready_t AMS_Construct_Ready()
 {
 	AMS_Ready_t p;
-	p.extID = READY_ID;
+	p.id = Compose_CANId(0x0, 0x10, 0x0, 0x3, 0x0, 0x0);
 
 	return p;
 }
-/* Transmit Device ID */
-BMS_TransmitDeviceID_t BMS_Compose_TransmitDeviceID(uint32_t deviceID)
-{
-	BMS_TransmitDeviceID_t p;
-	p.extID = BMS_TRANSMIT_DEVICE_ID_ID;
-	p.data[0] = (deviceID & 0xFF);
-	p.data[1] = (deviceID >> 8) & 0xFF;
-	p.data[2] = (deviceID >> 16) & 0xFF;
-	p.data[3] = (deviceID >> 24) & 0xFF;
-
-	return p;
-}
-
-void BMS_Parse_TransmitDeviceID(BMS_TransmitDeviceID_t packet, uint32_t* deviceID)
-{
-	*deviceID = (packet.data[3] << 24 | packet.data[2] << 16 | packet.data[1] << 8 | packet.data[0]);
-}
-
