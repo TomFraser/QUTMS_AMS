@@ -115,7 +115,7 @@ int main(void)
 	HAL_GPIO_WritePin(BMS_CTRL_GPIO_Port, BMS_CTRL_Pin, GPIO_PIN_SET);
 
 	// ALARM Line - HIGH
-	HAL_GPIO_WritePin(ALM_CTRL_GPIO_Port, ALM_CTRL_Pin, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(ALARM_CTRL_GPIO_Port, ALARM_CTRL_Pin, GPIO_PIN_SET);
 
 	// DELAY 300ms (and then pray the boards don't fry)
 	HAL_Delay(500); // who knows if this will work - need to check this
