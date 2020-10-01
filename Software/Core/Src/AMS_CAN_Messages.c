@@ -9,7 +9,7 @@
 #include "AMS_CAN_Messages.h"
 
 /* Cell Voltage Shutdown */
-AMS_CellVoltageShutdown_t AMS_Compose_CellVoltageShutdown(uint8_t cellNum, uint8_t bmsID, uint8_t voltage)
+AMS_CellVoltageShutdown_t Compose_AMS_CellVoltageShutdown(uint8_t cellNum, uint8_t bmsID, uint8_t voltage)
 {
 	AMS_CellVoltageShutdown_t p;
 	p.id = Compose_CANId(0x0, 0x10, 0x0, 0x0, 0x0, 0x0);
@@ -19,7 +19,7 @@ AMS_CellVoltageShutdown_t AMS_Compose_CellVoltageShutdown(uint8_t cellNum, uint8
 	return p;
 }
 
-void AMS_Parse_CellVoltageShutdown(AMS_CellVoltageShutdown_t packet, uint8_t* cellNum, uint8_t* bmsID, uint8_t* voltage)
+void Parse_AMS_CellVoltageShutdown(AMS_CellVoltageShutdown_t packet, uint8_t* cellNum, uint8_t* bmsID, uint8_t* voltage)
 {
 	*cellNum = (uint8_t)(packet.data[0] >> 4);
 	*bmsID = (uint8_t)(packet.data[0] & 0xF);
@@ -27,7 +27,7 @@ void AMS_Parse_CellVoltageShutdown(AMS_CellVoltageShutdown_t packet, uint8_t* ce
 }
 
 /* Cell Temperature Shutdown */
-AMS_CellTemperatureShutdown_t AMS_Compose_CellTemperatureShutdown(uint8_t cellNum, uint8_t bmsID, uint8_t temperature)
+AMS_CellTemperatureShutdown_t Compose_AMS_CellTemperatureShutdown(uint8_t cellNum, uint8_t bmsID, uint8_t temperature)
 {
 	AMS_CellTemperatureShutdown_t p;
 	p.id = Compose_CANId(0x0, 0x10, 0x0, 0x0, 0x1, 0x0);
@@ -37,14 +37,14 @@ AMS_CellTemperatureShutdown_t AMS_Compose_CellTemperatureShutdown(uint8_t cellNu
 	return p;
 }
 
-void AMS_Parse_CellTemperatureShutdown(AMS_CellTemperatureShutdown_t packet, uint8_t* cellNum, uint8_t* bmsID, uint8_t* temperature)
+void Parse_AMS_CellTemperatureShutdown(AMS_CellTemperatureShutdown_t packet, uint8_t* cellNum, uint8_t* bmsID, uint8_t* temperature)
 {
 	*cellNum = (uint8_t)(packet.data[0] >> 4);
 	*bmsID = (uint8_t)(packet.data[0] & 0xF);
 	*temperature = (uint8_t)(packet.data[1] & 0xFF);
 }
 
-AMS_MissingBMS_t AMS_Compose_MissingBMS(bool data[12])
+AMS_MissingBMS_t Compose_AMS_MissingBMS(bool data[12])
 {
 	//TODO Check
 	AMS_MissingBMS_t p;
@@ -55,12 +55,12 @@ AMS_MissingBMS_t AMS_Compose_MissingBMS(bool data[12])
 	return p;
 }
 
-void AMS_Parse_MissingBMS(AMS_MissingBMS_t packet, bool* data[12])
+void Parse_AMS_MissingBMS(AMS_MissingBMS_t packet, bool* data[12])
 {
 	return;
 }
 
-AMS_HeartbeatRequest_t AMS_Compose_HeartbeatRequest()
+AMS_HeartbeatRequest_t Compose_AMS_HeartbeatRequest()
 {
 	AMS_HeartbeatRequest_t p;
 	p.id = Compose_CANId(0x0, 0x10, 0x0, 0x1, 0x0, 0x0);
@@ -69,7 +69,7 @@ AMS_HeartbeatRequest_t AMS_Compose_HeartbeatRequest()
 }
 
 /* Heartbeat Response */
-AMS_HeartbeatResponse_t AMS_Compose_HeartbeatResponse(bool HVAn, bool HVBn, bool precharge, bool HVAp, bool HVBp, uint8_t averageVoltage, uint16_t runtime)
+AMS_HeartbeatResponse_t Compose_AMS_HeartbeatResponse(bool HVAn, bool HVBn, bool precharge, bool HVAp, bool HVBp, uint8_t averageVoltage, uint16_t runtime)
 {
 	AMS_HeartbeatResponse_t p;
 	p.id = Compose_CANId(0x0, 0x10, 0x0, 0x1, 0x1, 0x0);
@@ -82,7 +82,7 @@ AMS_HeartbeatResponse_t AMS_Compose_HeartbeatResponse(bool HVAn, bool HVBn, bool
 	return p;
 }
 
-void AMS_Parse_HeartbeatResponse(AMS_HeartbeatResponse_t packet, bool* HVAn, bool* HVBn, bool* precharge, bool* HVAp, bool* HVBp, uint8_t* averageVoltage, uint16_t* runtime)
+void Parse_AMS_HeartbeatResponse(AMS_HeartbeatResponse_t packet, bool* HVAn, bool* HVBn, bool* precharge, bool* HVAp, bool* HVBp, uint8_t* averageVoltage, uint16_t* runtime)
 {
 	*HVAn = (bool)(packet.data[0] & 0x1);
 	*HVBn = (bool)(packet.data[0] & 0x2);
@@ -96,7 +96,7 @@ void AMS_Parse_HeartbeatResponse(AMS_HeartbeatResponse_t packet, bool* HVAn, boo
 }
 
 /* Start Up */
-AMS_StartUp_t AMS_Compose_StartUp()
+AMS_StartUp_t Compose_AMS_StartUp()
 {
 	AMS_StartUp_t p;
 	p.id = Compose_CANId(0x0, 0x10, 0x0, 0x2, 0x0, 0x0);
@@ -105,7 +105,7 @@ AMS_StartUp_t AMS_Compose_StartUp()
 }
 
 /* Reset Tractive */
-AMS_ResetTractive_t AMS_Compose_ResetTractive()
+AMS_ResetTractive_t Compose_AMS_ResetTractive()
 {
 	AMS_ResetTractive_t p;
 	p.id = Compose_CANId(0x0, 0x10, 0x0, 0x2, 0x1, 0x0);
@@ -114,7 +114,7 @@ AMS_ResetTractive_t AMS_Compose_ResetTractive()
 }
 
 /* Shutdown */
-AMS_Shutdown_t AMS_Compose_Shutdown()
+AMS_Shutdown_t Compose_AMS_Shutdown()
 {
 	AMS_Shutdown_t p;
 	p.id = Compose_CANId(0x0, 0x10, 0x0, 0x2, 0x2, 0x0);
@@ -123,7 +123,7 @@ AMS_Shutdown_t AMS_Compose_Shutdown()
 }
 
 /* Request Temperature */
-AMS_RequestTemperature_t AMS_Compose_RequestTemperature()
+AMS_RequestTemperature_t Compose_AMS_RequestTemperature()
 {
 	AMS_RequestTemperature_t p;
 	p.id = Compose_CANId(0x0, 0x10, 0x0, 0x2, 0x3, 0x0);
@@ -132,7 +132,7 @@ AMS_RequestTemperature_t AMS_Compose_RequestTemperature()
 }
 
 /* Transmit Temperature */
-AMS_TransmitTemperature_t AMS_Compose_TransmitTemperature(uint8_t temperature)
+AMS_TransmitTemperature_t Compose_AMS_TransmitTemperature(uint8_t temperature)
 {
 	AMS_TransmitTemperature_t p;
 	p.id = Compose_CANId(0x0, 0x10, 0x0, 0x3, 0x3, 0x0);
@@ -141,13 +141,13 @@ AMS_TransmitTemperature_t AMS_Compose_TransmitTemperature(uint8_t temperature)
 	return p;
 }
 
-void AMS_Parse_TransmitTemperature(AMS_TransmitTemperature_t packet, uint8_t* temperature)
+void Parse_AMS_TransmitTemperature(AMS_TransmitTemperature_t packet, uint8_t* temperature)
 {
 	*temperature = packet.data[0];
 }
 
 /* Request Charge State */
-AMS_RequestChargeState_t AMS_Compose_RequestChargeState()
+AMS_RequestChargeState_t Compose_AMS_RequestChargeState()
 {
 	AMS_RequestChargeState_t p;
 	p.id = Compose_CANId(0x0, 0x10, 0x0, 0x2, 0x4, 0x0);
@@ -156,7 +156,7 @@ AMS_RequestChargeState_t AMS_Compose_RequestChargeState()
 }
 
 /* Transmit Charge State */
-AMS_TransmitChargeState_t AMS_Compose_TransmitChargeState(uint16_t chargeState)
+AMS_TransmitChargeState_t Compose_AMS_TransmitChargeState(uint16_t chargeState)
 {
 	AMS_TransmitChargeState_t p;
 	p.id = Compose_CANId(0x0, 0x10, 0x0, 0x3, 0x4, 0x0);
@@ -166,7 +166,7 @@ AMS_TransmitChargeState_t AMS_Compose_TransmitChargeState(uint16_t chargeState)
 	return p;
 }
 
-void AMS_Parse_TransmitChargeState(AMS_TransmitChargeState_t packet, uint16_t* chargeState)
+void Parse_AMS_TransmitChargeState(AMS_TransmitChargeState_t packet, uint16_t* chargeState)
 {
 	*chargeState = (packet.data[0] << 8 | packet.data[1]);
 }

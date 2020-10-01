@@ -143,7 +143,7 @@ int main(void)
 
 
 		// AMS Packet Example
-		AMS_CellVoltageShutdown_t x = AMS_Compose_CellVoltageShutdown(0, 0, 2);
+		AMS_CellVoltageShutdown_t x = Compose_AMS_CellVoltageShutdown(0, 0, 2);
 
 		TxHeader1.ExtId = x.id;
 		TxHeader1.DLC = sizeof(x.data);
